@@ -31,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+AUTH_USER_MODEL = 'users.CustomUser'
 
 # Application definition
 
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'firebase_django.wsgi.application'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTIACTION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'utilities.firebase.FirebaseAuthentication',
     ),
     'DEFAULT_FILTER_BACKENDS':
         ('django_filters.rest_framework.DjangoFilterBackend',),

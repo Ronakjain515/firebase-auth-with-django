@@ -11,14 +11,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	"""
 	first_name = models.CharField(max_length=30, null=False, blank=False)
 	last_name = models.CharField(max_length=30, null=False, blank=False)
+	email = models.EmailField(max_length=200, null=True, blank=False, unique=True)
 	uid = models.EmailField(unique=True, null=False, blank=False)
 	is_admin = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)
 	is_active = models.BooleanField(default=True)
 	date_joined = models.DateTimeField(default=timezone.now)
 	updated_at = models.DateTimeField(auto_now_add=True)
+	password = models.CharField(max_length=128, null=True, blank=False)
 
-	USERNAME_FIELD = 'uid'
+	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['first_name', 'last_name']
 
 	objects = CustomUserManager()
@@ -27,4 +29,4 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 		"""
 		Function to return uid.
 		"""
-		return self.uid
+		return self.email

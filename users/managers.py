@@ -1,5 +1,7 @@
 from django.contrib.auth.models import BaseUserManager
 
+from utilities.firebase import create_user
+
 
 class CustomUserManager(BaseUserManager):
     """
@@ -9,15 +11,15 @@ class CustomUserManager(BaseUserManager):
         """
         Function for creating user w.r.t custom user.
         """
-        user = self.model(
-            email=self.normalize_email(email)
-        )
+        uid = create_user(email, password)
+
+        user = self.model()
+        user.uid = uid
         user.first_name = first_name
         user.last_name = last_name
         user.is_superuser = False
         user.is_active = True
         user.is_staff = False
-        user.set_password(password)
         user.save(using=self._db)
         return user
 
